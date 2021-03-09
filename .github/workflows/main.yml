@@ -1,0 +1,50 @@
+name: Build
+on: push
+
+env:
+  SLN_FILE_NAME: 'Settlers4-ExtraZoom.sln'
+
+jobs:
+  build-asi-debug:
+    # https://github.com/actions/virtual-environments#available-environments
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+      # with:
+      #   vs-version: '[16.4,16.5)'
+
+    - name: Build debug
+      run: |
+        msbuild ${{ env.SLN_FILE_NAME }} /property:Configuration=Debug
+
+    - name: Upload debug build as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-debug
+        path: |
+          Debug/
+
+  build-asi-release:
+    # https://github.com/actions/virtual-environments#available-environments
+    runs-on: windows-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+      # with:
+      #   vs-version: '[16.4,16.5)'
+
+    - name: Build release
+      run: |
+        msbuild ${{ env.SLN_FILE_NAME }} /property:Configuration=Release
+
+    - name: Upload build as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-release
+        path: |
+          Release/*.asi
