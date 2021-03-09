@@ -14,8 +14,8 @@ jobs:
 
     - name: Build
       run: |
-        msbuild Settlers4-ExtraZoom.sln /property:Configuration=Debug
-        msbuild Settlers4-ExtraZoom.sln /property:Configuration=Release
+        msbuild *.sln /property:Configuration=Debug
+        msbuild *.sln /property:Configuration=Release
 
     - name: Upload build as artifact
       uses: actions/upload-artifact@v2
