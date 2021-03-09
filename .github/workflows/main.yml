@@ -15,20 +15,9 @@ jobs:
       # with:
       #   vs-version: '[16.4,16.5)'
 
-    - name: Build debug
-      run: |
-        msbuild ${{ env.SLN_FILE_NAME }}.sln /property:Configuration=Debug
-
-    - name: Upload debug build as artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: build-debug
-        path: |
-          Debug/
-
     - name: Build release
       run: |
-        msbuild ${{ env.SLN_FILE_NAME }}.sln /property:Configuration=Release
+        msbuild ${{ env.SLN_FILE_NAME }} /property:Configuration=Release
 
     - name: Upload build as artifact
       uses: actions/upload-artifact@v2
@@ -36,3 +25,14 @@ jobs:
         name: build-release
         path: |
           Release/*.asi
+
+    - name: Build debug
+      run: |
+        msbuild ${{ env.SLN_FILE_NAME }} /property:Configuration=Debug
+
+    - name: Upload debug build as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-debug
+        path: |
+          Debug/
